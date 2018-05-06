@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>Kafka Test</title>
+</head>
+<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://pv.sohu.com/cityjson?callback=onlineCallback" type="text/javascript">
+</script>
+<script >
+var i_total_secs;
+
+$(window).bind('beforeunload',function(){
+	var info={"browser":getBrowser(),"os":getOS(),"ip":returnCitySN["cip"],"time":i_total_secs};
+	$.ajax({
+		type:"POST",
+		url:"/sendUserInfo",
+		dataType:"JSON",
+		data:{info:JSON.stringify(info)},
+		success:function(data){
+			alert("success");
+		}
+	})
+
+});
+
+function getOS(){
+	var sUserAgent = navigator.userAgent;
+    var isWin = (navigator.platform == "Win32") || (navigator.platform == "Windows");
+    var isMac = (navigator.platform == "Mac68K") || (navigator.platform == "MacPPC") || (navigator.platform == "Macintosh") || (navigator.platform == "MacIntel");
+    if (isMac) return "Mac";
+    var isUnix = (navigator.platform == "X11") && !isWin && !isMac;
+    if (isUnix) return "Unix";
+    var isLinux = (String(navigator.platform).indexOf("Linux") > -1);
+    if (isLinux) return "Linux";
+    if (isWin) {
+        var isWin2K = sUserAgent.indexOf("Windows NT 5.0") > -1 || sUserAgent.indexOf("Windows 2000") > -1;
+        if (isWin2K) return "Win2000";
+        var isWinXP = sUserAgent.indexOf("Windows NT 5.1") > -1 || sUserAgent.indexOf("Windows XP") > -1;
+        if (isWinXP) return "WinXP";
+        var isWin2003 = sUserAgent.indexOf("Windows NT 5.2") > -1 || sUserAgent.indexOf("Windows 2003") > -1;
+        if (isWin2003) return "Win2003";
+        var isWinVista= sUserAgent.indexOf("Windows NT 6.0") > -1 || sUserAgent.indexOf("Windows Vista") > -1;
+        if (isWinVista) return "WinVista";
+        var isWin7 = sUserAgent.indexOf("Windows NT 6.1") > -1 || sUserAgent.indexOf("Windows 7") > -1;
+        if (isWin7) return "Win7";
+        var isWin10 = sUserAgent.indexOf("Windows NT 10") > -1 || sUserAgent.indexOf("Windows 10") > -1;
+        if (isWin10) return "Win10";
+    }
+    return "other";
+}
+function getBrowser() {  
+    //取得浏览器的userAgent字符串  
+    var userAgent = navigator.userAgent; 
+    var _pf=navigator.platform;
+    var isIE = window.ActiveXObject != undefined && userAgent.indexOf("MSIE") > -1;  
+    var isFirefox = userAgent.indexOf("Firefox") > -1;  
+    var isOpera = window.opr != undefined;  
+    var isChrome = userAgent.indexOf("Chrome") && window.chrome;  
+    var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Version") > -1;  
+    if(isIE) {  
+        return "IE";  
+    } else if(isFirefox) {  
+        return "Firefox";  
+    } else if(isOpera) {  
+        return "Opera";  
+    } else if(isChrome) {  
+        return "Chrome";  
+    } else if(isSafari) {  
+        return "Safari";  
+    } else {  
+        return "Unkown";  
+    }  
+}  
+
+</script>
+<body onload="init(); window.setTimeout('show_secs()',1);">    
+     
+        <script language="javascript">    
+            var ap_name = navigator.appName;    
+            var ap_vinfo = navigator.appVersion;    
+            var ap_ver = parseFloat(ap_vinfo.substring(0,ap_vinfo.indexOf('(')));// 获取版本号  
+            var time_start = new Date();    
+            var clock_start = time_start.getTime();    
+            var dl_ok=false;    
+            function init (){    
+            if(ap_name=="netscape" && ap_ver>=3.0)    
+                dl_ok=true;     
+                return true;    
+            }    
+            //已经打开页面多少秒  
+            function get_time_spent (){     
+                var time_now = new Date();    
+                return((time_now.getTime() - clock_start)/1000);     
+            }    
+            function show_secs (){  // show the time user spent on the side             
+                 i_total_secs = Math.round(get_time_spent());     
+                var i_secs_spent = i_total_secs % 60;    
+                var i_mins_spent = Math.round((i_total_secs-30)/60);//四舍五入，超60s，大于0.5，四舍五入就是1min     
+                var s_secs_spent = "" + ((i_secs_spent>9) ? i_secs_spent : "0" + i_secs_spent);//改显示格式：个位数-> 0+个位数，如7->07  
+                 var s_mins_spent ="" + ((i_mins_spent>9) ? i_mins_spent : "0" + i_mins_spent);    
+                document.fm0.time_spent.value = s_mins_spent + ":" + s_secs_spent;  //把值放入form中name为time_spent的input中  
+                window.setTimeout('show_secs()',1000);   //每隔1s刷新一次input里的值  
+            }    
+               
+        </script>    
+        <form name="fm0" onsubmit="0">    
+            <font color="#888888" size="-1">您在本网页的停留时间:</font>    
+            <input type="text" name="time_spent" size=7 onfocus="this.blur()">    
+        </form>    
+    </body>    
+</html>
