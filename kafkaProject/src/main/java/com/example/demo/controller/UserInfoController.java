@@ -19,7 +19,7 @@ public class UserInfoController {
         if(!StringUtils.isEmpty(info)) {
             template.send("topic-cjp", info);
         }else {
-            System.out.println("传入的信息为空");
+            System.out.println("传入的信息为空1");
         }
     }
 }
