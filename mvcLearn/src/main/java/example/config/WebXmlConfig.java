@@ -1,7 +1,12 @@
 package example.config;
 
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
 
 public class WebXmlConfig extends AbstractAnnotationConfigDispatcherServletInitializer{
 
@@ -15,7 +20,7 @@ public class WebXmlConfig extends AbstractAnnotationConfigDispatcherServletIniti
      </listener>
       */
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] {DispatcherServletXmlConfig.class};
+        return new Class<?>[] {ApplicationContextXmlConfig.class};
     }
 
     /*
@@ -44,5 +49,15 @@ public class WebXmlConfig extends AbstractAnnotationConfigDispatcherServletIniti
      */
     protected String[] getServletMappings() {
         return new String[] {"/"};
+    }
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setMultipartConfig(new MultipartConfigElement("/tmp"));
+    }
+
+    @Bean
+    public StandardServletMultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
     }
 }
