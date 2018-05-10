@@ -16,7 +16,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import java.util.List;
 
 @Configuration
+//启用springmvc
 @EnableWebMvc
+//启用组建扫描
 @ComponentScan("example.controller")
 public class DispatcherServletXmlConfig extends WebMvcConfigurerAdapter{
     /*
@@ -27,20 +29,23 @@ public class DispatcherServletXmlConfig extends WebMvcConfigurerAdapter{
         <property name="exposeContextBeansAsAttributes" value="true"/>
     </bean>
      */
+    //配置JSP试图解析器
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setViewClass(org.springframework.web.servlet.view.JstlView.class);
+//        resolver.setViewClass(org.springframework.web.servlet.view.JstlView.class);
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
         resolver.setExposeContextBeansAsAttributes(true);
         return resolver;
     }
 
+    //配置静态资源的处理
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        //要求DispatcherServlet 将对静态资源的请求转发到Servlet容器中默认的Servlet上， 而不是使用DispatcherServlet本身来处理此类请求
         configurer.enable();
-        super.configureDefaultServletHandling(configurer);
+//        super.configureDefaultServletHandling(configurer);
     }
 
     // 静态资源配置
