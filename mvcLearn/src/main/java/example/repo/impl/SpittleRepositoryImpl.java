@@ -3,7 +3,6 @@ package example.repo.impl;
 import example.pojo.Spittle;
 import example.repo.SpittleRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

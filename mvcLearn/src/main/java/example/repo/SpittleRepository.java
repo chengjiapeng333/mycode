@@ -2,7 +2,6 @@ package example.repo;
 
 import example.pojo.Spittle;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 /**

@@ -4,7 +4,6 @@ package example.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
 
