@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <div id="app1"></div>
+    <div id="app2">
+        {{reverseText}}
+        <!--调用method里的方法，注意括号-->
+        <!--{{reverseText()}}-->
+    </div>
+    <script>
+        var app1 = new Vue({
+            el:'#app1',
+            data:{
+                text:'123,456'
+            }
+        });
+        var app2 = new Vue({
+            el:'#app2',
+//            methods:{
+//                reverseText:function () {
+//                    return app1.text.split(',').reverse().join(',');
+//                }
+//            },
+            //计算属性基于它的以来缓存，只要text中的值不改变，计算属性也就不更新
+            //这是相对methods 方法调用的优势
+            computed:{
+                reverseText:function () {
+                    return app1.text.split(',').reverse().join(',');
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

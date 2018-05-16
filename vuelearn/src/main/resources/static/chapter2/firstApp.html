@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue的第一个应用</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="name" placeholder="你的名字">
+        <h1>你好,{{name}}</h1>
+        <h2>此时间每秒更新{{date | formatDate}}</h2>
+        <span v-html="link"></span>
+        <span v-pre>{{v-pre 用于跳过编译}}</span>
+        <br/>
+        {{age/3}}
+        {{isOK ? '确定': '取消'}}
+        {{reversedText}}
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script>
+        var Data={
+            name:'zhangsan',
+            age:'18',
+            date:new Date(),
+            link:'<a href="www.baidu.com">百度的链接</a>',
+            isOK:false,
+            text:'123,456'
+        };
+        var padDate = function (value) {
+            return value<10 ? '0'+value : value;
+        }
+        var app = new Vue({
+            //用于指定一个页面中已存在的DOM元素来挂载Vue实例
+            el:'#app',
+            //用于声明应用内需要双向绑定的数据
+            data:Data,
+            filters:{
+                formatDate:function (value) {
+                    var date = new Date(value);
+                    var year = date.getFullYear();
+                    var month = padDate(date.getMonth()+1);
+                    var day = padDate(date.getDate());
+                    var hours = padDate(date.getHours());
+                    var minutes = padDate(date.getMinutes());
+                    var seconds = padDate(date.getSeconds());
+                    return year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds;
+                }
+            },
+            computed:{
+                reversedText:function () {
+                    return this.text.split(',').reverse().join(',');
+                }
+            },
+            //vue的声明周期钩子
+            //created 实例创建完成后调用，此阶段完成了数据的观测，但尚未挂在，$el还不可用
+            //需要初始化处理一些数据时比较有用
+            created:function () {
+                //name 并不能获取
+                console.log(this.name);
+                console.log('created successful');
+            },
+            //el 挂载到实例上后调用
+            mounted:function () {
+                console.log("mounted successful");
+                console.log(this.$el); //<div id="app"><input type="text" v-model="name" placeholder="你的名字"><h1>你好,{{name}}</h1></div>
+                //定时器的使用
+                //声明一个变量指向Vue实例this，保证作用域一致
+                var _this = this;
+                this.timer = setInterval(function () {
+                    _this.date=new Date();
+                },1000);
+            },
+            beforeDestory:function () {
+                //vue实例销毁前，清除定时器
+                if(this.timer) {
+                    clearInterval(this.timer);
+                }
+            }
+        });
+        //Vue本身也代理了data对象里的所有属性
+        console.log(app.name); //zhangsan
+        console.log(app.age); //18
+        //vue 的双向数据绑定机制，修改vue属性，原数据也跟着修改，反之亦然
+        app.age=12;
+        console.log(Data.age);
+    </script>
+</body>
+</html>

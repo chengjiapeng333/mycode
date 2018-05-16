@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:>
+<head>
+    <meta charset="UTF-8">
+    <title>指令</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <p v-if="show">显示这段文本</p>
+        <!--v-bind用于更新html上的元素-->
+        <a :href="url">百度</a>
+        <!--v-on 用于绑定监听事件-->
+        <button @click="handleClose">点击隐藏</button>
+    </div>
+    <script>
+        var app = new Vue({
+            el:'#app',
+            data:{
+                show:true,
+                url:'www.baidu.com'
+            },
+            methods:{
+                handleClose:function () {
+                    this.show=false;
+                },
+                init:function (text) {
+                    console.log(text);
+                }
+            },
+            mounted:function () {
+                this.init('在初始化时调用');
+            }
+        });
+    </script>
+</body>
+</html>
