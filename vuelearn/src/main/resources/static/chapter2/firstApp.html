@@ -14,7 +14,7 @@
         <br/>
         {{age/3}}
         {{isOK ? '确定': '取消'}}
-        {{text.split(',').reverse().join(',')}}
+        {{reversedText}}
     </div>
     <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <script>
@@ -44,6 +44,11 @@
                     var minutes = padDate(date.getMinutes());
                     var seconds = padDate(date.getSeconds());
                     return year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds;
+                }
+            },
+            computed:{
+                reversedText:function () {
+                    return this.text.split(',').reverse().join(',');
                 }
             },
             //vue的声明周期钩子
