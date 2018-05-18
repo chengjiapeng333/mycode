@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--<div class="static active" ></div>-->
+        <div class="static" :class="{'active':isActive, 'error':isError}"></div>
+        <div class="static" :class="[{'active':isActive} , errorCls]"></div>
+        <!--<div class="active error" ></div>-->
+        <div :class="[activeCls, errorCls]"></div>
+
+        <div :style="styles">文本</div>
+
+
+    </div>
+    <script>
+        var app =  new Vue({
+           el:'#app',
+           data:{
+               isActive:true,
+               isError:false,
+               activeCls:'active',
+               errorCls:'error',
+               styles:{
+                   color:'red',
+                   fontSize:14+'px'
+               }
+           }
+        });
+    </script>
+</body>
+</html>
