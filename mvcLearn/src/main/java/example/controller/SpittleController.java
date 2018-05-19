@@ -45,14 +45,9 @@ public class SpittleController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String postRegister(@Valid Spitter spitter, MultipartFile file, Errors errors) throws IOException {
+    public String postRegister(@Valid Spitter spitter,  Errors errors) throws IOException {
         if(errors.hasErrors()) {
             return "registerForm";
-        }
-        if(file.isEmpty()) {
-            System.out.println("文件为空");
-        }else {
-            file.transferTo(new File("d:/myfile/"+file.getOriginalFilename()));
         }
        return "redirect:/spittles/spitter/"+spitter.getUsername();
 
