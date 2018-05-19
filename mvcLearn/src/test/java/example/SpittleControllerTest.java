@@ -1,6 +1,7 @@
 package example;
 
 import example.controller.SpittleController;
+import example.pojo.Spitter;
 import example.pojo.Spittle;
 import example.repo.SpittleRepository;
 import example.repo.impl.SpittleRepositoryImpl;
@@ -34,5 +35,17 @@ public class SpittleControllerTest {
         SpittleController controller = new SpittleController(dao);
         MockMvc mockMvc = standaloneSetup(controller).build();
         mockMvc.perform(get("/spittles/register")).andExpect(view().name("registerForm"));
+    }
+
+    @Test
+    public void registProcessTest() throws Exception {
+        SpittleRepository dao = new SpittleRepositoryImpl();
+        SpittleController controller = new SpittleController(dao);
+        MockMvc mockMvc = standaloneSetup(controller).build();
+        mockMvc.perform(post("/spittles/register")
+                .param("firstName", "zhangsan")
+                .param("lastName", "zhangsan")
+                .param("username", "zhangsan")
+                .param("password", "zhangsan")).andExpect(redirectedUrl("/spittles/spitter/zhangsan"));
     }
 }
