@@ -13,12 +13,18 @@
 </head>
 <body>
     <h1>Register</h1>
-    <form method="post">
+    <form method="post" >
         FirstName:<input type="text" name="firstName"/><br/>
         LastName:<input type="text" name="lastName"/><br/>
         UserName:<input type="text" name="username"/><br/>
         Password:<input type="text" name="password"/><br/>
-        <input type="submit" value="Register" />
+        Picture:<input type="file" name="file"/><br/>
+    </form>
+
+    <h2>上传图片</h2>
+    <form method="post" action="./upload" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="上传图片">
     </form>
 
 </body>
