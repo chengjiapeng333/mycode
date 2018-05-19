@@ -1,12 +1,10 @@
 package example.config;
 
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletRegistration;
 
+
+//扩展了AbstractAnnotationConfigDispatcherServletInitializer的类会自动配置DispatcherServlet和Spring应用程序上下文
+//Spring的应用程序上下文会位于应用程序的Servlet 上下文中
 public class WebXmlConfig extends AbstractAnnotationConfigDispatcherServletInitializer{
 
     /*
@@ -50,13 +48,4 @@ public class WebXmlConfig extends AbstractAnnotationConfigDispatcherServletIniti
         return new String[] {"/"};
     }
 
-    @Override
-    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setMultipartConfig(new MultipartConfigElement("/tmp"));
-    }
-
-    @Bean
-    public StandardServletMultipartResolver multipartResolver() {
-        return new StandardServletMultipartResolver();
-    }
 }
