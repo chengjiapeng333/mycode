@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <div id="app" >
+        <p v-if="status===1">当status为1时显示该行</p>
+        <p v-else-if="status===2">当status为2时显示该行</p>
+        <p v-else>否则显示该行</p>
+
+        <!--<p style="display: none;">当status为2时显示该行</p>-->
+        <p v-show="status===2">当status为2时显示该行</p>
+
+        <template v-if="type==='name'">
+            <label>用户名:</label>
+            <input placeholder="请输入用户名" key="name-input">
+        </template>
+        <template v-else="type==='name'">
+            <label>邮箱:</label>
+            <input placeholder="请输入邮箱" key="mail-input">
+        </template>
+        <button @click="handleToggleClick">切换输入类型</button>
+
+        <ul>
+            <li v-for="(book,index) in sortedBooks">{{index}}-{{book.name}}</li>
+            <h2>使用template</h2>
+            <template v-for="book in filterBooks">
+                <li>书名:{{book.name}}</li>
+                <li>作者:{{book.author}}</li>
+            </template>
+            <h2>遍历对象的属性</h2>
+            <span v-for="value in user">{{value}}</span>
+            <ul>
+                <li v-for="(value,key,index) in user">
+                    {{index}}-{{key}}:{{value}}
+                </li>
+            </ul>
+            <h3>迭代整数</h3>
+            <span v-for="n in 10">{{n}} </span>
+        </ul>
+    </div>
+    <!--v-show 和v-if的区别，v-if用于渲染销毁元素组件，v-show 设置的是元素的css属性使元素隐藏，为false时,display:none-->
+    <script>
+        var app = new Vue({
+            el:'#app',
+            data:{
+                status:1,
+                type:'name',
+                books:[
+                    {name:'《Vue.js实战》',author:'zhangsan'},
+                    {name:'《JavaScript语言精粹》',author:'lisi'},
+                    {name:'《JavaScript高级程序设计》',author:'wangwu'}
+                ],
+                user:{
+                    name:'Aresn',
+                    gender:'男',
+                    age:26
+                }
+            },
+            computed:{
+              filterBooks:function () {
+                  return this.books.filter(function (book) {
+                      return book.name.match(/JavaScript/);
+                  });
+              },
+              sortedBooks:function () {
+                return this.books.sort(function (a,b) {
+                    return a.name.length<b.name.length;
+                });
+              }
+
+            },
+            methods:{
+                handleToggleClick:function () {
+                    this.type=this.type==='name'?'mail':'name';
+                }
+            }
+        });
+        app.books.push({
+            name:'《Css揭秘》',
+            author:'zhaoliu'
+        });
+/*        app.books = app.books.filter(function (item) {
+            return item.name.match(/JavaScript/);
+        });*/
+        app.$set(app.books,2,{
+            name:'《Css111》',
+            author:'zhangsan111'
+        });
+    </script>
+</body>
+</html>

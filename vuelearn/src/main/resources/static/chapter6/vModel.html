@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model.lazy.trim="message" placeholder="输入..">
+    <p>输入的内容是:{{message}}</p>
+    <h4>单选：</h4>
+    <input type="radio" v-model="picked" value="html" id="html"><label for="html">HTML</label><br>
+    <input type="radio" v-model="picked" value="js" id="js"><label for="js">JavaScript</label><br>
+    <input type="radio" v-model="picked" value="css" id="css"><label for="css">CSS</label><br>
+    <p>所选择的项{{picked}}</p>
+    <h4>复选框</h4>
+    <input type="checkbox" v-model="checked" value="html" id="html2"><label for="html2">HTML</label><br>
+    <input type="checkbox" v-model="checked" value="js" id="js2"><label for="js2">JavaScript</label><br>
+    <input type="checkbox" v-model="checked" value="css" id="css2"><label for="css2">CSS</label><br>
+    <p>所选择的项{{checked}}</p>
+    <h4>下拉框</h4>
+    <select v-model="selected" >
+        <option v-for="option in options" :value="option.value">{{option.text}}</option>
+    </select>
+    <p>所选择的项:{{selected}}</p>
+
+</div>
+<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+<script>
+    var app = new Vue({
+       el:'#app',
+       data:{
+           message:'',
+           picked:'js',
+           checked:['html','css'],
+           selected:'html',
+           options:[
+               {
+                   text:'HTML',
+                   value:'html'
+               },
+               {
+                   text:'JavaScript',
+                   value:'js'
+               },
+               {
+                   text:'CSS',
+                   value:'css'
+               }
+           ]
+       }
+    });
+</script>
+</body>
+</html>
