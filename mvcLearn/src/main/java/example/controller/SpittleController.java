@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.File;
@@ -70,4 +71,30 @@ public class SpittleController {
             return "上传成功";
         }
     }
+
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    @ResponseBody
+    public String errorTest() {
+        int i=1/0;
+        return "错误";
+
+    }
+
+    //测试如何在重定向中保存数据
+    @RequestMapping(value = "/testRedirect", method = RequestMethod.GET)
+    public String testRedirect(RedirectAttributes model) {
+        String username="zhangsan";
+        Spitter spitter = new Spitter(username, username, username, username);
+        model.addFlashAttribute("spitter", spitter);
+        return "redirect:./checkRedirect";
+    }
+
+    @RequestMapping("/checkRedirect")
+    public String check(Model model) {
+        if(!model.containsAttribute("spitter")) {
+            System.out.println("不存在");
+        }
+        return "profile";
+    }
+
 }
