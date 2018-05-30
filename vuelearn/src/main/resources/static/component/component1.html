@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <h4>定义一个组件</h4>
+    <div id="component-demo">
+        <button-counter></button-counter>
+    </div>
+    <h4>组件的复用</h4>
+    <div id="component-demo2">
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+    <script>
+        Vue.component('button-counter',{
+            data:function () {
+                return {
+                    counter:0
+                }
+            },
+            template:'<button @click="counter++">you click me {{counter}} times</button>'
+        });
+        var app = new Vue({
+            el:'#component-demo'
+        });
+        var app2 = new Vue({
+            el:'#component-demo2'
+        })
+    </script>
+</body>
+</html>

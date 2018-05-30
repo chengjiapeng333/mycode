@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <custom-input v-model="searchText"></custom-input>
+    {{searchText}}
+</div>
+<script>
+    Vue.component('custom-input',{
+        props: ['value'],
+        template:'<input v-bind:value="value" v-on:input="$emit(\'input\', $event.target.value)">'
+    });
+    var app = new Vue({
+        el:'#app',
+        data:{
+            searchText:''
+        }
+    });
+
+
+</script>
+</body>
+</html>
